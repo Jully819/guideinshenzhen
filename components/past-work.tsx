@@ -3,7 +3,6 @@ import {
   Wine,
   Handshake,
   Users,
-  Building2,
   Laptop,
   Landmark,
   Presentation,
@@ -16,7 +15,7 @@ import { ExpandingCards, type CardItem } from "@/components/ui/expanding-cards";
  * origin in the critical path and a large slice of the "improve image delivery"
  * finding in the Lighthouse report. Same pictures, a fraction of the bytes.
  *
- * ALL EIGHT are now the owner's own photographs, from site/Photos, encoded to
+ * ALL SEVEN are now the owner's own photographs, from site/Photos, encoded to
  * the 3:2 the cards crop to. No stock remains in this section.
  *
  * WHY THE CARDS WERE RETITLED. They used to read Trade show support, Factory
@@ -37,7 +36,7 @@ import { ExpandingCards, type CardItem } from "@/components/ui/expanding-cards";
  *      line on the page says so.
  *
  *      The cards are TITLE-ONLY by request: each one carried a sentence of
- *      supporting copy and all eight were removed. `description` is therefore
+ *      supporting copy and all of them were removed. `description` is therefore
  *      optional on CardItem and the paragraph does not render when it is
  *      absent, so restoring one is a matter of adding the field back rather
  *      than touching the block. That is also where the fair, the month and
@@ -111,15 +110,6 @@ const pastWork: CardItem[] = [
     imgSrcSet:
       "/past-work/working-sessions-500.webp 500w, /past-work/working-sessions-1000.webp 1000w",
     icon: <Laptop size={24} />,
-    linkHref: "#",
-  },
-  {
-    id: "company-visits",
-    title: "Company visits",
-    imgSrc: "/past-work/company-visits-1000.webp",
-    imgSrcSet:
-      "/past-work/company-visits-500.webp 500w, /past-work/company-visits-1000.webp 1000w",
-    icon: <Building2 size={24} />,
     linkHref: "#",
   },
   {
