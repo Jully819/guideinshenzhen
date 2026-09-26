@@ -1,0 +1,935 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Bone, near-black, and one chartreuse that is almost never spent.
+
+   The reference pairs a warm bone page with full-bleed black bands and a loud
+   chartreuse. We keep the first two and deliberately hold the third back: at
+   rest the accent appears only as hairlines, small markers, link underlines
+   and text on black.
+
+   That is a decision, not an oversight. This site has exactly one job, which is
+   to get a visitor onto the calendar. If chartreuse also filled icon chips,
+   step numbers and stat blocks, the booking button would stop being the one
+   thing the eye lands on. Buttons are solid ink at rest, which on bone is the
+   highest contrast available and reads as expensive rather than eager.
+
+   THREE SANCTIONED EXCEPTIONS, all deliberate:
+     - Primary buttons flood citron ON HOVER. Hover is transient and pointer-
+       only, so the resting page still spends the accent once; and the one
+       element that lights up under the cursor is the one we want clicked.
+     - The icon chips in components/why-book.tsx, which are small non-text
+       markers in a section containing no button to compete with.
+     - Service cards in components/services-section.tsx flood citron ON HOVER,
+       for the same reason as the buttons: transient, pointer-only, one card at
+       a time, and the resting grid is still bone and cream. Text on it stays
+       ink, which measures about 16:1.
+   Anything else that wants an accent fill needs a better reason than these.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Core palette — values taken from the reference's own custom properties,
+     not eyeballed from a screenshot. Its --cream becomes our card surface. */
+  --color-ink: #0a0a0a; /* near-black — dark bands, footer, every button */
+  --color-ink-soft: #171717; /* raised surfaces on ink, and button hover */
+  --color-paper: #f5f2eb; /* bone — the page */
+  --color-paper-card: #ede9de; /* the reference's --cream: cards and bands */
+  --color-paper-dim: #e6e1d4; /* one step deeper, for alternating sections */
+
+  /* The accent. Read the contrast note below before using it anywhere. */
+  --color-citron: #c8f23a;
+
+  /* Dark olive. The accent's stand-in wherever text must be legible on bone.
+     The reference never needs this because it only ever uses lime as a fill. */
+  --color-moss: #4a5a1c;
+
+  /* Text */
+  --color-mist: #b8b8b2; /* body text and hairlines on ink */
+  --color-slate: #5c5651; /* meta text on bone. Darkened from #6b6560, which measured 4.40:1 on --color-paper-dim and failed WCAG AA. Now 5.54:1. */
+
+  /* Not in the reference palette, which has no failure states to show.
+     Required anyway: errors rendered in the accent read as success, and a
+     required-field marker has to be distinguishable from decoration. */
+  --color-alert: #a33f32;
+
+  /* CONTRAST — the trap in this palette.
+     --citron on --paper measures about 1.2:1. It is unreadable as text on any
+     light surface. It may only appear on bone as a HAIRLINE or a small
+     non-text MARKER. As text it is valid on --ink only (about 16:1).
+     When a light background needs accent text, use --moss (about 7:1).
+     Buttons are --ink filled with --paper text, never accent-filled. */
+
+  /* Typography — set by next/font in app/layout.tsx.
+     Syne and DM Sans are the reference's own faces. The mono is ours: the
+     reference has no times or prices to set, and slots down the spine have to
+     line up on tabular figures. */
+  --font-display: var(--font-syne), "Helvetica Neue", sans-serif;
+  --font-body: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+
+  /* The hairline that the time-spine is drawn with */
+  --spine-width: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   shadcn/ui token layer.
+
+   Everything under components/ui/ is written against shadcn's token names —
+   bg-primary, text-muted-foreground, border-input, ring-offset-background —
+   none of which existed here. Rather than let those components fall back to
+   shadcn's default slate palette (which would look like a different website
+   bolted onto this one), each token is mapped onto the bone/ink palette above.
+
+   WHY RAW HSL CHANNELS AND NOT HEX. The supplied gallery block builds its
+   scrim with `hsl(var(--primary)/0.4)` inside an arbitrary value. That syntax
+   only works if --primary holds bare channels ("0 0% 4%"), not a colour. So
+   the channels live on :root, and `@theme inline` wraps them in hsl() to make
+   the utilities. `inline` is load-bearing: without it Tailwind would emit its
+   own copy of the variable and the runtime value would stop tracking :root.
+
+   NOT the site's own palette. --color-ink and friends above are what the
+   hand-written components use; these exist for pasted-in shadcn blocks.
+--------------------------------------------------------------------------- */
+
+:root {
+  --background: 42 33% 94%; /* --color-paper */
+  --foreground: 0 0% 4%; /* --color-ink */
+  --card: 44 29% 90%; /* --color-paper-card */
+  --card-foreground: 0 0% 4%;
+  --popover: 42 33% 94%;
+  --popover-foreground: 0 0% 4%;
+  --primary: 0 0% 4%; /* ink — buttons, dots, the gallery scrim */
+  --primary-foreground: 42 33% 94%;
+  --secondary: 43 26% 87%; /* --color-paper-dim */
+  --secondary-foreground: 0 0% 4%;
+  --muted: 44 29% 90%;
+  --muted-foreground: 27 5% 40%; /* --color-slate */
+  --accent: 44 29% 90%;
+  --accent-foreground: 0 0% 4%;
+  --destructive: 7 53% 42%; /* --color-alert */
+  --destructive-foreground: 42 33% 94%;
+  --border: 43 26% 87%;
+  --input: 43 26% 87%;
+  --ring: 0 0% 4%;
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* The sticky booking bar is full-bleed and fixed; without this a sub-pixel
+     overflow on it gives the whole page a horizontal scrollbar. */
+  overflow-x: hidden;
+}
+
+/* Hairline scrollbar, from the reference. WebKit only; Firefox keeps its own. */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+
+/* ---------------------------------------------------------------------------
+   Component classes live in @layer components.
+
+   This is load-bearing, not tidiness. Tailwind v4 emits real cascade layers,
+   and anything written outside them beats every utility regardless of source
+   order. `.btn { display: inline-flex }` written unlayered therefore defeated
+   `hidden sm:inline-flex` on the header's CTA — the button stayed visible at
+   375px and pushed the page into horizontal scroll. Inside `components`,
+   utilities win, which is what every one of these classes wants.
+--------------------------------------------------------------------------- */
+
+@layer components {
+  /* Display face: Syne, heavy and tracked in. The tight tracking is the whole
+     character of the reference — at default spacing this reads as a generic bold
+     sans. Never used below 20px, where the negative tracking closes the
+     counters. */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+  }
+
+  /* The outlined-word treatment from the reference headline. Used ONCE, on one
+     phrase of the hero. A second use makes it a pattern rather than a moment.
+
+     The stroke colour must be a REAL colour, not `currentColor`: `color` is set
+     to transparent on this same element, so `currentColor` resolves to
+     transparent and the text disappears entirely. Defaults to bone because the
+     only use sits on ink; override --outline to place it on a light surface.
+
+     -webkit-text-stroke is prefixed everywhere, but supported everywhere that
+     matters. If it is ignored the text renders transparent, so a fallback colour
+     is set first and only overridden where the stroke is known to work. */
+  .text-outline {
+    --outline: var(--color-paper);
+    color: var(--outline);
+  }
+
+  @supports (-webkit-text-stroke: 1px red) {
+    .text-outline {
+      -webkit-text-stroke: 1.5px var(--outline);
+      color: transparent;
+    }
+
+    @media (min-width: 640px) {
+      .text-outline {
+        -webkit-text-stroke-width: 2px;
+      }
+    }
+  }
+
+  /* Utility face: timestamps, prices, durations, flight numbers.
+     Tabular figures so times line up down the spine. */
+  .font-mono,
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  /* Eyebrow labels. The leading rule is the reference's em-dash, drawn rather
+     than typed so it cannot be read aloud by a screen reader as "em dash".
+
+     SET IN THE DISPLAY FACE, NOT THE MONO. These were IBM Plex Mono, which
+     made every section label read as data — a timestamp or a price — rather
+     than as a title. The reference sets them in its own grotesk, and here that
+     means Syne at 600: the same voice as the headings they introduce, the nav
+     tabs and the claim strip, so all the small uppercase type on the site is
+     now one treatment instead of two.
+
+     The mono is still the right face for actual data. Times, prices, durations
+     and phone numbers keep `.tabular`; only these labels moved. */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+    flex: none;
+  }
+
+  /* Ghost numerals on the dark process band — large, outlined, low presence. */
+  .ghost-numeral {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+    opacity: 0.35;
+    line-height: 1;
+  }
+
+  /* ---------------------------------------------------------------------------
+     Buttons. Pill, solid ink, trailing arrow. One shape for every action on the
+     site, so "this is pressable" never has to be relearned.
+  --------------------------------------------------------------------------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 999px;
+    padding: 0.9rem 1.6rem;
+
+    /* 48px is the touch-target floor. Several buttons on this site set their
+       own smaller padding for a compact row (py-2.5 on the header CTA, which
+       measured 34px tall), and a thumb does not care what the design system
+       intended. min-height wins over the utility because it is a floor, not a
+       fixed height, so the taller buttons are untouched. */
+    min-height: 48px;
+
+    /* Syne, matching the reference's buttons — but NOT via `.font-display`.
+       That class carries -0.03em tracking, which the note on it warns closes
+       the counters below 20px, and button labels run at ~15px. Same family and
+       weight, tracking reset to neutral: the face still reads as the display
+       voice without the letterforms collapsing into each other at this size. */
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0;
+
+    font-size: 0.92rem;
+    line-height: 1;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* HOVER IS THE ONE PLACE THE ACCENT FILLS A BUTTON.
+     At rest every primary button is solid ink, so the accent is still spent
+     only once per screen — see the note at the top of this file. On hover it
+     floods citron, which is the reference's own move and reads as the button
+     lighting up rather than merely darkening.
+
+     `color` is set explicitly, not inherited. Citron under the default paper
+     text measures about 1.2:1 and the label would vanish at the exact moment
+     someone is about to click it; against ink it is roughly 16:1. Every
+     surface variant below therefore repeats BOTH declarations. */
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-citron);
+    color: var(--color-ink);
+  }
+
+  /* On an ink band the filled-ink button would disappear, so it inverts. */
+  .on-ink .btn-primary {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .on-ink .btn-primary:hover:not(:disabled) {
+    background: var(--color-citron);
+    color: var(--color-ink);
+  }
+
+  /* …but a LIGHT CARD sitting inside an ink band is still a light surface, and
+     the inversion above would render a bone button on a cream card at about
+     1.2:1 — invisible. The booking bar is exactly this case. `.on-paper` marks
+     such a card and puts the button, and the focus ring, back to the light-
+     surface treatment. Specificity beats `.on-ink .btn-primary` by source order,
+     so this block must stay below it. */
+  .on-paper .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .on-paper .btn-primary:hover:not(:disabled) {
+    background: var(--color-citron);
+    color: var(--color-ink);
+  }
+
+  .on-paper :focus-visible {
+    outline-color: var(--color-ink);
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid rgb(10 10 10 / 0.28);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-ink);
+  }
+
+  .on-ink .btn-secondary {
+    color: var(--color-paper);
+    border-color: rgb(245 242 235 / 0.32);
+  }
+
+  .on-ink .btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-paper);
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ---------------------------------------------------------------------------
+     Nav links. Same Syne as the buttons and the headings, and tracking reset to
+     neutral for the same reason — these run at ~14px, well under the 20px floor
+     the display class's -0.03em is safe at.
+
+     HOVER: an underline wipes in from the left and the label goes to full ink.
+     Drawn as a ::after that scales on X rather than `text-decoration`, because a
+     real underline can only appear instantly; this one has somewhere to travel
+     from, which is what makes it read as a response rather than a state flip.
+
+     It is ink, not citron. A citron hairline on bone measures about 1.2:1 and
+     would be a hover effect most people simply cannot see — the contrast note at
+     the top of this file exists for exactly this trap.
+
+     scaleX is deliberate over animating `width`: transforms are composited, so
+     the wipe does not force layout on every frame of every hover.
+
+     ACTIVE: a 1px downward nudge. Small, but it is the difference between a link
+     that acknowledges the click and one that feels dead until the page changes.
+  --------------------------------------------------------------------------- */
+
+  .nav-link {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0;
+    color: color-mix(in oklab, var(--color-ink) 72%, transparent);
+    transition:
+      color 0.18s ease,
+      transform 0.08s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.3rem;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.24s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .nav-link:hover {
+    color: var(--color-ink);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link:active {
+    transform: translateY(1px);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Header tabs. Uppercase, tracked, and wearing a pill on hover and on the
+     page they point at.
+
+     A PILL, NOT THE UNDERLINE WIPE `.nav-link` USES. These sit in a row where
+     one item is the page you are on, and a background is the only treatment
+     that reads as "you are here" at rest — an underline at rest reads as a
+     link you have not clicked yet, or as a mistake. `.nav-link` keeps the wipe
+     and is still used by the mobile menu, where items are stacked and there is
+     no row for a pill to sit in.
+
+     THE RESTING COLOUR IS SLATE, NOT INK. Six items at full contrast compete
+     with the wordmark and the booking button either side of them. Muted at
+     rest, ink on hover, is what keeps the row quiet while still answering a
+     pointer.
+
+     Padding rather than gap does the spacing between items: the pill has to
+     extend past its label or it looks like a highlighter accident, and two
+     pills separated by a 1.75rem gap read as unrelated buttons.
+  --------------------------------------------------------------------------- */
+
+  .nav-tab {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-slate);
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .nav-tab:hover {
+    background: color-mix(in oklab, var(--color-ink) 7%, transparent);
+    color: var(--color-ink);
+  }
+
+  /* The page you are on. aria-current is the accessible signal and the styling
+     hook at once, so the two can never disagree. */
+  .nav-tab[aria-current="page"] {
+    background: var(--color-paper-card);
+    color: var(--color-ink);
+  }
+
+  .nav-tab:active {
+    transform: translateY(1px);
+  }
+
+  /* On an ink band the resting colour has to invert or the link disappears. */
+  .on-ink .nav-link {
+    color: color-mix(in oklab, var(--color-paper) 75%, transparent);
+  }
+
+  .on-ink .nav-link:hover {
+    color: var(--color-paper);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Focus — always visible, never removed. The ring colour flips by surface:
+   citron is ~1.2:1 on bone and would be an invisible focus indicator there, so
+   light surfaces get an ink ring and only dark surfaces get citron.
+--------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.on-ink :focus-visible {
+  outline-color: var(--color-citron);
+  box-shadow: 0 0 0 4px rgb(200 242 58 / 0.25);
+}
+
+/* The inquiry wizard's step heading. It carries tabindex="-1" and is focused
+   in code on every step change so the change is announced instead of silently
+   swapping the questions under a keyboard user. It is not interactive, so the
+   ring is noise — and on a block-level heading it draws a box the full width
+   of the form. Suppressed here rather than with Tailwind's `outline-none`,
+   which loses: utilities live in a cascade layer and the :focus-visible rule
+   above does not, so the unlayered rule wins regardless of source order. See
+   the note at the top of this file. */
+.step-heading:focus-visible {
+  outline: none;
+}
+
+::selection {
+  background: var(--color-citron);
+  color: var(--color-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero atmosphere — sits over the photograph, not instead of it. Dark enough
+   at the left edge that display text holds its contrast wherever the image
+   happens to be bright.
+--------------------------------------------------------------------------- */
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      100deg,
+      rgb(10 10 10 / 0.92) 0%,
+      rgb(10 10 10 / 0.78) 38%,
+      rgb(10 10 10 / 0.42) 68%,
+      rgb(10 10 10 / 0.55) 100%
+    ),
+    linear-gradient(180deg, rgb(10 10 10 / 0.55) 0%, transparent 30%);
+}
+
+/* Grain keeps the large flat gradients from banding on wide displays */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+}
+
+/* ---------------------------------------------------------------------------
+   The time-spine — the signature element.
+   A hairline carrying mono timestamps. Earned here because a day genuinely is
+   an ordered sequence in time, and the order carries information.
+--------------------------------------------------------------------------- */
+
+.spine {
+  position: relative;
+  /* The line sits at the box edge; list items start one inset in. Both the
+     rule and the diamonds are positioned from this single value so they can
+     never drift apart at a breakpoint. */
+  --spine-inset: 1.5rem;
+  padding-left: var(--spine-inset);
+}
+
+@media (min-width: 640px) {
+  .spine {
+    --spine-inset: 2rem;
+  }
+}
+
+.spine::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: var(--spine-width);
+  background: currentColor;
+  opacity: 0.28;
+}
+
+/* Pulled back onto the rule: list items are inset, the rule is not. */
+.spine-node::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--spine-inset) * -1 + var(--spine-width) / 2);
+  top: 1.35rem;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  /* Citron by default, because the spine was built for ink bands. On a light
+     surface citron measures about 1.2:1 and the diamonds vanish, so the paper
+     variant below repoints this at moss. Set through a variable rather than a
+     second rule so the marker and the timestamps cannot end up different
+     colours on the same spine. */
+  background: var(--spine-marker, var(--color-citron));
+}
+
+/* The light-surface variant. Paired with `tone="paper"` on TimeSpine, which
+   switches the timestamps to moss at the same time. */
+.spine[data-tone="paper"] {
+  --spine-marker: var(--color-moss);
+}
+
+.spine-node:first-child::before {
+  top: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion — one orchestrated entrance, not scattered effects
+--------------------------------------------------------------------------- */
+
+@keyframes spine-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-spine-rise {
+  animation: spine-rise 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+/* ---------------------------------------------------------------------------
+   The scrolling claim strip under the hero (components/marquee-bar.tsx).
+
+   -50%, NOT A PIXEL DISTANCE. The track holds two identical copies of the
+   list, so half its width is exactly one copy: at -50% the second copy sits
+   where the first began and the loop is seamless at any width, in any font,
+   with any number of claims. A pixel value would have to be re-measured every
+   time the copy changed.
+
+   RIGHT TO LEFT. Negative translation moves the track left, so the text reads
+   as flowing leftwards — the direction that lets a left-to-right reader catch
+   each phrase as it arrives rather than watching it reverse into view.
+
+   SLOW ON PURPOSE. 70s for a full pass — roughly 17px a second at this track
+   width, a drift rather than a scroll. This sits directly under the hero and
+   is the only thing moving on a still page, so it errs towards being ignorable
+   rather than towards being read at speed. One number to change if it wants to
+   be calmer still.
+--------------------------------------------------------------------------- */
+
+.marquee {
+  overflow: hidden;
+  /* Contains the track's paint so the animation cannot force layout on the
+     rest of the page. */
+  contain: content;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide 70s linear infinite;
+}
+
+/* Hovering pauses it. The claims are readable text, and text that will not
+   hold still is text a visitor gives up on. */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The three vehicles in the hero skyline (components/skyline.tsx).
+
+   THE AIRCRAFT IDLE, THE CAR TRAVELS. Drone and helicopter return to exactly
+   where they started — identical 0% and 100% poses — so they loop without a
+   visible jump. The taxi does not: it drives clean off one edge and re-enters
+   at the other, and its loop is invisible only because both ends of the
+   journey are outside the viewBox.
+
+   That difference is why the taxi needs its own reduced-motion override at the
+   bottom of this file. The global reduce rule collapses every animation to
+   0.01ms, which lands each one on its final keyframe — resting pose for the
+   two that idle, and off-screen for the one that travels.
+
+   Only `transform` and `opacity` are animated. Both are composited, so the
+   hero does not re-layout or repaint sixty times a second behind the booking
+   bar — which is the one element on this page that has to stay responsive.
+
+   Durations are deliberately prime-ish and unequal (9s / 13s / 17s). Equal
+   ones would drift into sync every few cycles and the three would start
+   moving as a unit, which reads as a carousel rather than as a city.
+--------------------------------------------------------------------------- */
+
+@keyframes drone-hover {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(3px, -4px);
+  }
+  50% {
+    transform: translate(7px, -1px);
+  }
+  75% {
+    transform: translate(2px, 3px);
+  }
+}
+
+@keyframes heli-cruise {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-15px, 5px);
+  }
+}
+
+/* The taxi crosses the whole drawing, left to right, then comes round again.
+
+   THE NUMBERS ARE IN THE CAR'S OWN COORDINATE SPACE, WHICH IS SCALED 1.25×
+   BY ITS PARENT (see components/skyline.tsx). So 1px here moves the car 1.25
+   user units in the 640-wide viewBox. -416 puts its centre at user x ≈ -50,
+   clear off the left edge; +176 puts it at ≈ 690, clear off the right.
+
+   Linear, not eased: a car crossing a scene at constant speed is the whole
+   point, and any ease would have it visibly accelerating out of thin air at
+   the left edge and braking into nothing at the right.
+
+   THE HOLD AT THE END IS THE GAP BETWEEN CARS. It sits off-screen from 80% to
+   100% — a little under four seconds of empty road before the next pass. A
+   loop with no hold puts a car on screen permanently, which turns a quiet
+   detail behind the headline into a conveyor belt. */
+@keyframes taxi-drive {
+  0% {
+    transform: translate(-416px, 0);
+  }
+  80%,
+  100% {
+    transform: translate(176px, 0);
+  }
+}
+
+/* Rotor discs. Opacity rather than rotation — these are ellipses seen almost
+   edge-on, and rotating them about their own centre does nothing visible. A
+   disc that thins out and fills back in is how a spinning blade actually
+   reads at this size. */
+@keyframes rotor-blur {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes blade-sweep {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.12);
+  }
+}
+
+@keyframes lidar-sweep {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+
+/* The balloon. Drift and bob are separate keyframe sets on nested groups so
+   they can run at different periods (29s and 19s) — with one period the two
+   axes stay in lockstep and the balloon traces the same tidy oval forever.
+   Both return to their start pose, so the loop is seamless and the
+   reduced-motion rule leaves it parked where it is drawn.
+
+   WHERE IT SITS, AND WHY IT MOVED LEFT TO GET LOWER. Shun Hing Square's twin
+   masts rise to y≈156 at x≈366, and the banner hangs 78 units below the group
+   origin and is 100 wide — so at the old midpoint (x=364) the balloon had 8
+   units of headroom and no more. Left of those masts the roofs drop away:
+   China Resources tops out at y≈206 and the slim tower at y≈204. At x=300 the
+   banner's bottom edge sits at 176 with roughly 28 units still to spare, which
+   is what buys the extra descent.
+
+   The drift comes down to 12px for the same reason. The banner reaches x=350
+   at rest; any more travel and its right edge is back in the masts. */
+@keyframes balloon-drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+}
+
+@keyframes balloon-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.sky-balloon-drift {
+  animation: balloon-drift 29s ease-in-out infinite;
+}
+
+.sky-balloon-bob {
+  animation: balloon-bob 19s ease-in-out infinite;
+}
+
+.sky-drone {
+  animation: drone-hover 9s ease-in-out infinite;
+}
+
+.sky-heli {
+  animation: heli-cruise 13s ease-in-out infinite;
+}
+
+.sky-taxi {
+  animation: taxi-drive 18s linear infinite;
+}
+
+.sky-rotor {
+  animation: rotor-blur 0.4s linear infinite;
+}
+
+/* Staggered so the four discs are not one flashing block. */
+.sky-rotor:nth-of-type(2) {
+  animation-delay: 0.1s;
+}
+.sky-rotor:nth-of-type(3) {
+  animation-delay: 0.2s;
+}
+.sky-rotor:nth-of-type(4) {
+  animation-delay: 0.3s;
+}
+
+/* fill-box, not the SVG default. Without it the origin is the user-space
+   origin — the top-left of the whole 640×400 drawing — and scaling about that
+   point flings the blade off the side of the picture instead of pinching it
+   about its own hub. */
+.sky-blade,
+.sky-lidar {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sky-blade {
+  animation: blade-sweep 0.75s ease-in-out infinite;
+}
+
+.sky-lidar {
+  animation: lidar-sweep 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* The taxi is switched OFF rather than sped up. Its journey ends off the
+     right-hand edge of the drawing, so collapsing the duration would run it
+     there in a hundredth of a millisecond and the car would simply be missing
+     from the picture. Killing the animation outright leaves it parked at the
+     position it is authored at in components/skyline.tsx. */
+  .sky-taxi {
+    animation: none !important;
+  }
+
+  /* Same reasoning for the claim strip: stopped, not sped up. It holds real
+     text, and this preference exists precisely for people who cannot read
+     moving text. Stopped at translateX(0), the first copy of the list fills
+     the bar and reads normally. */
+  .marquee-track {
+    animation: none !important;
+  }
+}

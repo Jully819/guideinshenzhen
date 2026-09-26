@@ -1,0 +1,20 @@
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+
+# Secrets — never commit. .env.example is the committed template.
+.env
+.env.local
+.env*.local
+
+*.tsbuildinfo
+next-env.d.ts
+
+# Production build output, kept separate so it cannot clobber the dev server's .next
+.next-prod
+lighthouse-report.html
+
+# Pexels API key for the blog skill
+photo.env
