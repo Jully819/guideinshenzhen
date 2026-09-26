@@ -11,7 +11,7 @@
  * example.com is caught in review rather than in Search Console.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
 ).replace(/\/$/, "");
 
 /**
