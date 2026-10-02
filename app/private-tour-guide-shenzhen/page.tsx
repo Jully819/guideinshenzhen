@@ -311,7 +311,7 @@ export default function PrivateTourGuideShenzhenPage() {
             >
               five places worth your time
             </Link>{" "}
-            are written up in full, including the ones you do not need us for.
+            are written up in full.
           </p>
         </div>
       </section>

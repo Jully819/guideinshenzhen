@@ -61,7 +61,7 @@ function shot(
  * together.
  *
  * WHAT NONE OF THEM COVERED, added here: arriving over the Hong Kong border,
- * an honest time budget per stop, and when not to bother at all.
+ * and an honest time budget per stop.
  *
  * VOICE. Written to references/voice.md, which is measured off the National Day
  * post. Short sentences, no em dashes, no semicolons, no colons, no
@@ -362,24 +362,6 @@ export const topFiveHighTechShenzhen: Post = {
         { label: "Talent Park", value: "One hour, including lunch" },
         { label: "DJI Sky City", value: "Forty minutes" },
         { label: "Robotaxi", value: "No extra time. It replaces a journey." },
-      ],
-    },
-    {
-      id: "when-to-skip",
-      heading: "When to skip all of this",
-      image: shot(
-        "shenzhen-park-quiet-green-space",
-        807,
-        "A quiet tree-lined path through a green city park.",
-        "Vitali Adutskevich",
-        "https://www.pexels.com/@vitali-adutskevich-1096947",
-        "https://www.pexels.com/photo/park-alley-with-green-trees-14300713/",
-      ),
-      paragraphs: [
-        "If you are not actually interested in technology, do not do this list. Shenzhen has mountains, a coastline, an old market quarter and a lot of very good food, and none of that is on this page. A tech itinerary followed out of obligation is five hours of looking at buildings you do not care about.",
-        "You also do not need us for it. If your Mandarin is decent, your payment app works and you can afford to lose an hour to a wrong turn, do the whole thing yourself. Four of the five are publicly accessible and the metro reaches all of them. Nobody needs a guide to walk them into a shop.",
-        "Hire someone when the trip has a job attached. You are sourcing at Huaqiangbei and the price you are quoted matters. You have [meetings either side of the sightseeing](/business-trip). You have exactly one free day and cannot afford to spend a third of it discovering that the robotaxi will not collect you from where you are standing.",
-        "That is the honest line, and it is the same one we would give you on the phone. A day with us is worth it when the friction is expensive. When it is not, it is a nice extra and you should spend the money on dinner.",
       ],
     },
   ],

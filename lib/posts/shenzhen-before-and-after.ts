@@ -335,25 +335,6 @@ export const shenzhenBeforeAndAfter: Post = {
         { label: "Watch for", value: "Access details change, confirm the week you go" },
       ],
     },
-    {
-      id: "when-to-skip",
-      heading: "When none of this is worth your day",
-      image: shot(
-        "shenzhen-urban-village-alley",
-        900,
-        "A narrow alley between tall residential buildings, in black and white.",
-        "terry narcissan tsui",
-        "https://www.pexels.com/@narcissan",
-        "https://www.pexels.com/photo/urban-alleyway-scene-in-hong-kong-32235099/",
-      ),
-      paragraphs: [
-        "Skip the history if you have three days and you came for the electronics. Huaqiangbei and a factory floor will tell you more about how this city actually works than a Ming gate will. The gate is not going anywhere.",
-        "Skip it if what you want is old China. Shenzhen has one restored walled town and one fort. Guangzhou is an hour away by train and has a great deal more of it, and so does almost anywhere else in Guangdong. Saying that out loud costs us bookings and it is still the right advice.",
-        "You do not need anybody for Nantou either. Metro, walk in, free, open late. If you read a little Chinese and you have an afternoon spare, go by yourself and have a coffee against a wall the Ming put up.",
-        "Hire somebody when the day has a job attached to it. You are fitting the history around [supplier meetings](/business-trip) and the schedule cannot slip. You have one free day between flights and cannot afford to lose a third of it to a wrong turn. You want the urban village explained by somebody who knows which building went up in which year, which is written on no sign anywhere.",
-        "That is the honest line and it is the same one we would give you on the phone. A [private guide in Shenzhen](/private-tour-guide-shenzhen) earns their keep when friction is expensive. When it is not, keep the money and eat well instead.",
-      ],
-    },
   ],
   faqs: [
     {

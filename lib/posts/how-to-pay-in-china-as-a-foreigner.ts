@@ -427,22 +427,6 @@ export const howToPayInChinaAsAForeigner: Post = {
         { label: "Business extras", value: "Invoicing details and an agreed payment route" },
       ],
     },
-    {
-      id: "who-should-skip",
-      heading: "Who does not need any help with this",
-      paragraphs: [
-        "**Most visitors should do all of this themselves, and it is not hard.** Coming for a few days of sightseeing? Install both apps at home, link a card, bring a few hundred yuan and go. The apps are in English. So is the metro signage. Once the setup is done, paying is easier than in a lot of Europe. Hiring anybody to stand next to you while you scan a code is money wasted.",
-        "The same goes if you already speak Mandarin, or if you have been before and know the drill. Nothing in the first six sections needs a guide.",
-        "It changes when the payments stop being personal. A deposit to a factory. A fapiao your finance team specified. A supplier negotiating terms in Mandarin, and a dinner where the etiquette is part of the deal. Getting any of those wrong costs more than a fee. That is a different day from a shopping trip, and it is the day we are useful on.",
-        "If that is your trip, a [private guide and interpreter in Shenzhen](/private-tour-guide-shenzhen) is in the room for the part that matters, which is the conversation rather than the scan. [Tell us the dates](/inquiry) and what you are buying.",
-        "And if you are crossing from Hong Kong for the day, the payment picture is slightly different again, because residents there have solved it in a way visitors cannot copy. We covered that in [why Hong Kong people spend money in Shenzhen](/blog/why-hong-kong-people-spend-money-in-shenzhen).",
-      ],
-      facts: [
-        { label: "Do it yourself", value: "Sightseeing trips, short stays, anybody who speaks Mandarin" },
-        { label: "Worth help", value: "Supplier payments, negotiated terms, invoice requirements" },
-        { label: "The hard part", value: "The conversation, not the technology" },
-      ],
-    },
   ],
   faqs: [
     {

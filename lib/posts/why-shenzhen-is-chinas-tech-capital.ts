@@ -248,8 +248,7 @@ export const whyShenzhenIsChinasTechCapital: Post = {
         "None of the above is visitable in the way a museum is. There is no tour of Huawei. DJI does not run an open day. The interesting parts of this city are workplaces. Workplaces need a reason to let you in.",
         "What is open is the layer underneath. The component markets trade with anybody. The observation deck on the four hundredth metre shows you the whole build in one look. Robotaxis carry ordinary passengers. Those are real and they are bookable by a stranger.",
         "The rest runs on introductions. A factory will host a buyer with a specification and a translator, and will politely decline the same person without either. That is not gatekeeping so much as a working day being protected.",
-        "**Here is who should not hire anybody, including us.** If you already have a supplier, a contract and a contact who answers your messages, you do not need a guide. You need a freight forwarder and a video call. If you are visiting for a weekend and want to see the skyline and eat well, the metro is in English and the city is safe. Book a hotel in Futian and go.",
-        "Where a [private tour guide in Shenzhen](/private-tour-guide-shenzhen) earns the money is the middle case. You have three days, six half-formed leads, no Mandarin and no way to tell a trading company from the factory it claims to be. That is a real problem and it is the one we solve. If it is yours, [tell us the dates](/inquiry).",
+        "A [private tour guide in Shenzhen](/private-tour-guide-shenzhen) earns the money when you have three days, six half-formed leads, no Mandarin and no way to tell a trading company from the factory it claims to be. That is a real problem and it is the one we solve. If it is yours, [tell us the dates](/inquiry).",
       ],
       facts: [
         { label: "Open to anybody", value: "Component markets, observation deck, robotaxis" },

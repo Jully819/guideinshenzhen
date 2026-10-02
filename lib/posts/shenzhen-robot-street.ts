@@ -58,7 +58,7 @@ function shot(
  *
  * WHAT NONE OF THEM COVERED, added here: an honest time and distance budget
  * from the half of the city visitors actually stay in, the split between going
- * to look and going to buy, and when not to bother at all.
+ * to look and going to buy.
  *
  * VOICE. Written to references/voice.md. No em dashes, no semicolons, no
  * colons, no parentheses, no exclamation marks. Humour front-loaded per
@@ -99,7 +99,7 @@ export const shenzhenRobotStreet: Post = {
   metaTitle: "Shenzhen Robot Street in Longgang, and How to Visit",
   /* 150 characters. Keyword, then what you get, then a soft nudge. */
   metaDescription:
-    "The Shenzhen robot street in Longgang, where robots pour coffee, cook dinner and work a junction. What is there, how long it takes, and when to skip it.",
+    "The Shenzhen robot street in Longgang, where robots pour coffee, cook dinner and work a junction. What is there, what the day costs, and what to do if you came to buy.",
   socialImage: "/blog/shenzhen-robot-street/og-shenzhen-robot-street-1200x630.jpg",
   excerpt:
     "Bantian, in Longgang, has a block where robots make the coffee, run the restaurant and direct the traffic outside. It is a showroom rather than a theme park, and that is the interesting part.",
@@ -331,18 +331,6 @@ export const shenzhenRobotStreet: Post = {
         { label: "Best route in", value: "Lease before you buy" },
         { label: "Time to allow", value: "A full morning, plus meetings" },
         { label: "Watch for", value: "The useful answers arrive in Mandarin" },
-      ],
-    },
-    {
-      id: "when-to-skip",
-      heading: "When to skip the robot street",
-      paragraphs: [
-        "Skip it if you have two days in Shenzhen. With forty-eight hours you should be in Futian and Nanshan, where the density is, and the two hours of travel this costs you is a straight loss. Come back for it on a longer trip.",
-        "Skip it if you were hoping for a show. Four ten-minute slots and a shop is a real afternoon for somebody interested in the industry and a thin one for somebody who wanted a spectacle. The drone shows over the bay are the spectacle. This is the workshop.",
-        "Skip it if the weather has turned. Half the appeal is a pavement, and a wet pavement moves the show indoors and takes the street out of the street.",
-        "You also do not need us for the looking. The metro goes there, the store is free, and nobody needs a guide to walk into a shop and watch a robot make a pancake. If your payment app works and you can lose an hour to a wrong turn, go on your own and enjoy it.",
-        "Hire somebody when there is a job attached. You are sourcing, or you need the price a Mandarin speaker hears, or you have one free day and cannot spend a third of it discovering the theatre is dark. That is the honest line and it is the same one you would get from us on the phone. When the friction is expensive, a [private guide in Shenzhen](/private-tour-guide-shenzhen) pays for itself. When it is not, spend the money on dinner.",
-        "The one figure worth carrying out of here belongs to Xinhua rather than to us. They report China taking ninety per cent of global humanoid robot shipments in 2025, with Shenzhen running the highest research and development intensity of any Chinese city at 6.67 per cent. That is the context for a block of robot shops existing at all. It is not a tourist attraction that grew an industry. It is an industry that grew a pavement, and the pavement is the bit you are allowed to walk on.",
       ],
     },
   ],

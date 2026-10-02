@@ -62,8 +62,7 @@ function shot(
  *
  * WHAT NONE OF THEM COVERED, added here: that their own exhibition listings
  * have already expired, an honest half-day budget from where visitors actually
- * sleep, the booking and identity friction a foreign visitor hits, and when not
- * to go at all.
+ * sleep, and the booking and identity friction a foreign visitor hits.
  *
  * ⚠️ EXHIBITION LISTINGS ARE DELIBERATELY NOT REPRODUCED AS CURRENT. The seven
  * opening shows were dated. The bronze animal heads closed on 20 July 2026 and
@@ -310,25 +309,6 @@ export const shenzhenInternationalMuseumOfArt: Post = {
         { label: "Shape", value: "Two hours each, with a break between" },
         { label: "Good for", value: "Families, and anyone who came for buildings" },
         { label: "Watch for", value: "Assuming a combined ticket exists" },
-      ],
-    },
-    {
-      id: "when-to-skip",
-      heading: "When to skip it",
-      image: shot(
-        "quiet-gallery-when-to-skip",
-        773,
-        "Stock photograph of two framed works on a plain white gallery wall.",
-        "Ivan Siarbolin",
-        "https://www.pexels.com/@ivan-siarbolin-1513699",
-        "https://www.pexels.com/photo/black-and-red-frames-on-white-wall-4068032/",
-      ),
-      paragraphs: [
-        "Skip it if you have two days in Shenzhen. Two days belong to Futian and Nanshan, and two hours of travel is a straight loss against that. This is a third-day building.",
-        "Skip it if nothing on this month's programme interests you. A new museum between loan shows is a very fine building with quiet rooms in it, and there is no permanent collection waiting to carry the visit. Look first, then decide.",
-        "Skip it if you were promised an Asia Art Museum and what you wanted was Asian antiquities. That is not what this is. The programme so far has been international loans and contemporary work, and the older Chinese material has arrived as visiting exhibitions rather than as a standing display.",
-        "You also do not need us for any of it. The metro goes there, the building is signed in English, and booking a museum ticket is not a skill. If your payment app works and you can read a WeChat screen with a translation tool open, go on your own.",
-        "Hire somebody when the day has a job attached. You are taking a client out and the conversation matters more than the labels. You have one free day between meetings and cannot afford to lose it to a closed hall. You want the museum, the science museum and a driver who can wait through both. That is the day a [private guide in Shenzhen](/private-tour-guide-shenzhen) is worth paying for, and when it is not, we would rather tell you so.",
       ],
     },
   ],
