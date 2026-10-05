@@ -1,3 +1,4 @@
+import { hongKongShenzhenBorderCrossingGuide } from "@/lib/posts/hong-kong-shenzhen-border-crossing-guide";
 import { howToPayInChinaAsAForeigner } from "@/lib/posts/how-to-pay-in-china-as-a-foreigner";
 import { whyHongKongPeopleSpendMoneyInShenzhen } from "@/lib/posts/why-hong-kong-people-spend-money-in-shenzhen";
 import { whyShenzhenIsChinasTechCapital } from "@/lib/posts/why-shenzhen-is-chinas-tech-capital";
@@ -158,6 +159,7 @@ export interface Post {
 }
 
 export const posts: Post[] = [
+  hongKongShenzhenBorderCrossingGuide,
   shenzhenInternationalMuseumOfArt,
   shenzhenRobotStreet,
   howToPayInChinaAsAForeigner,
