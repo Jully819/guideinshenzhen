@@ -162,27 +162,61 @@ export function InquiryForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!answers.name.trim()) return setError("We need a name to reply to.");
-    if (!answers.email.trim()) return setError("We need an email for the quote.");
+    const name = answers.name.trim();
+    const email = answers.email.trim();
+    if (!name) return setError("We need a name to reply to.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
+      return setError("That email does not look right — it is where the quote goes.");
+
+    // Honeypot. Show the confirmation anyway: telling a script it was caught
+    // tells it what to change.
+    if (answers.company.trim()) return setStatus({ state: "sent" });
 
     setError(null);
     setStatus({ state: "sending" });
 
+    // Straight to FormSubmit from the browser, like the chat widget — it
+    // refuses requests from Vercel's servers, so /api/inquiry cannot relay it.
+    // Labelled keys because FormSubmit emails the fields as a table, and this
+    // is what the person writing the quote reads.
+    const cut = (v: string, max = 120) => v.trim().slice(0, max);
     try {
-      const response = await fetch("/api/inquiry", {
+      const response = await fetch(business.messageEndpoint, {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(answers),
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          Name: cut(name),
+          Email: cut(email),
+          "WhatsApp / WeChat": cut(answers.whatsapp),
+          Company: cut(answers.organisation),
+          "Trip type": cut(answers.tripType, 40),
+          Starting: cut(answers.startDate, 40),
+          Days: cut(answers.days, 20),
+          Travellers: cut(answers.travellers, 20),
+          Languages: cut(answers.languages),
+          Interests: answers.interests.slice(0, 20).join(", "),
+          Pace: cut(answers.pace, 40),
+          Pickup: cut(answers.pickup),
+          Dietary: cut(answers.dietary),
+          "In their words": cut(answers.notes, 2000),
+          _subject: `New trip inquiry from ${cut(name)}`,
+          _replyto: cut(email),
+          _template: "table",
+        }),
       });
       const body = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
+      if (
+        !response.ok ||
+        body.success === false ||
+        body.success === "false"
+      ) {
         setStatus({
           state: "error",
-          message:
-            body.code === "no-transport"
-              ? "The form is not connected yet — send this to us directly instead:"
-              : (body.error ?? "That did not send. Try again, or reach us directly:"),
+          message: "That did not send. Try again, or reach us directly:",
         });
         return;
       }
