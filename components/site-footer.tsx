@@ -51,8 +51,6 @@ export function SiteFooter() {
                   label: "Private tour guide in Shenzhen",
                 },
                 { href: "/business-trip", label: "Business trip support" },
-                { href: "/calendar", label: "Fair calendar" },
-                { href: "/blog", label: "Blog" },
                 { href: "/cancellation-policy", label: "Cancellation policy" },
               ].map((l) => (
                 <li key={l.href}>
