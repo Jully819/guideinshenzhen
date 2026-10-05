@@ -54,12 +54,6 @@ export function SiteFooter() {
                 { href: "/calendar", label: "Fair calendar" },
                 { href: "/blog", label: "Blog" },
                 { href: "/cancellation-policy", label: "Cancellation policy" },
-                /* About and FAQ lost their header tabs; this column is now the
-                   only navigation to either. Do not thin it out further
-                   without giving them a home somewhere else first. */
-                { href: "/about", label: "About" },
-                { href: "/faq", label: "FAQ" },
-                { href: "/book", label: "Book a day" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
