@@ -74,8 +74,12 @@ const nextConfig: NextConfig = {
       },
       {
         /* The self-hosted stock and blog photography is immutable: a change of
-           picture is a change of filename. */
-        source: "/:dir(attractions-stock|blog)/:path*",
+           picture is a change of filename. Image files only. The old pattern
+           matched every path under /blog, so the blog index and every post
+           were cached by browsers for a year, and a new post never showed up
+           for anyone who had visited before. */
+        source:
+          "/:dir(attractions-stock|blog)/:path*/:file(.+\\.(?:webp|jpe?g|png|avif))",
         headers: [
           {
             key: "Cache-Control",
