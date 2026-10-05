@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { business } from "@/lib/content";
 
 export function SiteFooter() {
@@ -17,6 +18,29 @@ export function SiteFooter() {
             {business.city} time
           </p>
         </div>
+
+        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+          {/* The landing page is deliberately NOT in the header nav. It targets
+              people arriving from search, and a header tab pointing at a
+              near-duplicate of the home page is confusing. This link is what
+              keeps it crawlable from every page. */}
+          {[
+            {
+              href: "/private-tour-guide-shenzhen",
+              label: "Private tour guide in Shenzhen",
+            },
+            { href: "/cancellation-policy", label: "Cancellation policy" },
+          ].map((l) => (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                className="text-[0.9rem] text-paper/70 hover:text-paper"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-paper/15 pt-6 text-[0.8rem] text-paper/65">
           <p>
