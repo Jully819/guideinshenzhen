@@ -18,10 +18,11 @@ import { business } from "@/lib/content";
  * promise. The form is for questions that can wait; the row underneath it is
  * for everything else.
  *
- * IF THE FORM IS NOT CONNECTED IT SAYS SO. /api/message answers 503 when no
- * transport is configured, and this panel then shows the direct channels
- * instead of a tick — see the `no-transport` branch. Never tell someone their
- * message was sent when it went nowhere.
+ * IT POSTS STRAIGHT TO FORMSUBMIT from the browser (`business.messageEndpoint`),
+ * which emails the message on. Not via /api/message: FormSubmit refuses
+ * requests from Vercel's servers with a 403. FormSubmit can answer 200 with
+ * `success: "false"`, so the body is checked before showing a tick. Never tell
+ * someone their message was sent when it went nowhere.
  *
  * The panel is a plain container, not role="dialog": it does not trap focus or
  * block the page, and announcing a modal that behaves like a popover sends a
@@ -73,30 +74,60 @@ export function ChatWidget() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    // Honeypot. A human never sees this field, so anything in it is a bot.
+    // Show the tick anyway: telling a script it was caught tells it what to
+    // change.
+    if (String(data.get("company") ?? "").trim() !== "") {
+      form.reset();
+      setStatus({ state: "sent" });
+      return;
+    }
+
+    const problem = !name
+      ? "A name is needed."
+      : message.length < 5
+        ? "That message is too short to act on."
+        : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
+          ? "That email does not look right — it is where the reply goes."
+          : null;
+    if (problem) {
+      setStatus({ state: "error", message: problem, showChannels: false });
+      return;
+    }
+
     setStatus({ state: "sending" });
 
     try {
-      const response = await fetch("/api/message", {
+      const response = await fetch(business.messageEndpoint, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
         body: JSON.stringify({
-          name: data.get("name"),
-          email: data.get("email"),
-          message: data.get("message"),
-          company: data.get("company"), // honeypot
+          name,
+          email,
+          message: message.slice(0, 2000),
           page: window.location.pathname,
+          _subject: `New message from ${name} via ${business.name}`,
+          _replyto: email,
         }),
       });
 
       const body = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
+      if (
+        !response.ok ||
+        body.success === false ||
+        body.success === "false"
+      ) {
         setStatus({
           state: "error",
-          message:
-            body.code === "no-transport"
-              ? "The message form is not connected yet — but these reach us now:"
-              : (body.error ?? "That did not send. Try one of these instead:"),
+          message: "That did not send. Try this instead:",
           showChannels: true,
         });
         return;

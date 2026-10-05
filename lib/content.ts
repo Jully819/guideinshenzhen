@@ -96,6 +96,12 @@ export const business = {
   legalName: "PLACEHOLDER — register legal entity name here",
   tagline: "A private guide in Shenzhen, for the day.",
   wechatId: "guideinshenzhen",
+  /**
+   * Where the chat widget posts, straight from the visitor's browser. FormSubmit
+   * answers 403 to requests from Vercel's servers, so this cannot go through
+   * /api/message. Activated for guideinshenzhen.vercel.app and localhost.
+   */
+  messageEndpoint: "https://formsubmit.co/ajax/msl.wang@gmail.com",
   licence: "LICENCE-NUMBER-PENDING", // PLACEHOLDER — do not ship
   city: "Shenzhen",
   timeZone: "Asia/Shanghai",
