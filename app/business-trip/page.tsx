@@ -210,18 +210,9 @@ export default function BusinessTripPage() {
               Arrange your trip
               <span aria-hidden="true">→</span>
             </Link>
-            <a
-              href={`mailto:${business.email}`}
-              className="btn btn-secondary"
-            >
-              Email us
-            </a>
-            <a
-              href={`tel:${business.phone.replace(/\s/g, "")}`}
-              className="tabular text-[0.9rem] text-slate transition-colors hover:text-ink"
-            >
-              {business.phone}
-            </a>
+            <p className="tabular text-[0.9rem] text-slate">
+              WeChat: {business.wechatId}
+            </p>
           </div>
 
           <p className="mt-10 border-t border-ink/12 pt-6 text-[0.9rem] text-ink/60">

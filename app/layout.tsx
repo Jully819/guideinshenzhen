@@ -86,10 +86,7 @@ export const viewport: Viewport = {
  * Site-wide Organization schema. One node, emitted on every page, so a crawler
  * can tie the per-page Article, Service and FAQ blocks to a publisher.
  *
- * ⚠️ `telephone` and `email` are PLACEHOLDER values from lib/content.ts, and a
- * fake phone number in structured data is worse than no phone number at all.
- * They are deliberately omitted until real ones exist. Add them here and to the
- * contact details in the footer at the same time.
+ * No `telephone` or `email`: the business is reached on WeChat only.
  */
 const organizationSchema = {
   "@context": "https://schema.org",

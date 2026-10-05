@@ -52,20 +52,6 @@ export default function AboutPage() {
         <p className="eyebrow text-slate">Reach a person</p>
         <dl className="mt-4 space-y-2 text-[0.95rem]">
           <div className="flex gap-3">
-            <dt className="w-24 text-ink/65">Phone</dt>
-            <dd className="tabular">
-              <a href={`tel:${business.phone.replace(/\s/g, "")}`}>
-                {business.phone}
-              </a>
-            </dd>
-          </div>
-          <div className="flex gap-3">
-            <dt className="w-24 text-ink/65">Email</dt>
-            <dd>
-              <a href={`mailto:${business.email}`}>{business.email}</a>
-            </dd>
-          </div>
-          <div className="flex gap-3">
             <dt className="w-24 text-ink/65">WeChat</dt>
             <dd className="tabular">{business.wechatId}</dd>
           </div>

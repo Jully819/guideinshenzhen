@@ -22,8 +22,7 @@
 
 export const REPLACE_BEFORE_LAUNCH = [
   "business.name / legalName / tagline",
-  "business.phone / whatsapp / email / wechatId",
-  "business.licence (currently an obvious dummy)",
+    "business.licence (currently an obvious dummy)",
   "pricing in lib/pricing.ts — every figure is a guess",
   "guide bio, languages and photograph on /about",
   "policy.* — cancellation window and refund terms, which must match Stripe",
@@ -96,10 +95,7 @@ export const business = {
   name: "Guide in Shenzhen",
   legalName: "PLACEHOLDER — register legal entity name here",
   tagline: "A private guide in Shenzhen, for the day.",
-  phone: "+86 000 0000 0000", // PLACEHOLDER — obviously fake
-  whatsapp: "+86 000 0000 0000", // PLACEHOLDER
-  email: "hello@example.com", // PLACEHOLDER
-  wechatId: "PLACEHOLDER-WECHAT-ID",
+  wechatId: "guideinshenzhen",
   licence: "LICENCE-NUMBER-PENDING", // PLACEHOLDER — do not ship
   city: "Shenzhen",
   timeZone: "Asia/Shanghai",

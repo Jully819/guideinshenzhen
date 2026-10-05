@@ -160,21 +160,13 @@ function BookingCard({
         <div className="mt-7 border-t border-ink/12 pt-6">
           <p className="text-[0.92rem] leading-relaxed text-ink/75">
             Need to move the date, change the party size, or cancel? Reply to
-            your confirmation email or call us and we will handle it. Cancel
+            your confirmation email or message us on WeChat and we will handle it. Cancel
             more than {booking.cancellationHours} hours before the start and you
             are refunded in full to the card you paid with.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <a
-              href={`tel:${business.phone.replace(/\s/g, "")}`}
-              className="btn btn-primary"
-            >
-              Call {business.phone}
-            </a>
-            <a href={`mailto:${business.email}`} className="btn btn-secondary">
-              Email us
-            </a>
-          </div>
+          <p className="tabular mt-5 text-[0.95rem] text-ink">
+            WeChat: {business.wechatId}
+          </p>
         </div>
       )}
 

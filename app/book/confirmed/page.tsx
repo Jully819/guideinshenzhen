@@ -114,14 +114,10 @@ export default async function ConfirmedPage({
             We couldn&rsquo;t confirm that payment.
           </h1>
           <p className="mt-5 text-[1rem] leading-relaxed text-ink/75">
-            If you were charged, you will be refunded automatically. Call{" "}
-            <a
-              href={`tel:${business.phone.replace(/\s/g, "")}`}
-              className="tabular text-moss underline underline-offset-2"
-            >
-              {business.phone}
-            </a>{" "}
-            and we&rsquo;ll sort it out directly.
+            If you were charged, you will be refunded automatically. Message
+            us on WeChat at{" "}
+            <span className="tabular text-ink">{business.wechatId}</span> and
+            we&rsquo;ll sort it out directly.
           </p>
         </>
       )}

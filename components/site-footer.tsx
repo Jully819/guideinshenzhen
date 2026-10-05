@@ -12,17 +12,7 @@ export function SiteFooter() {
               {business.tagline}
             </p>
             <p className="tabular mt-5 text-[0.9rem]">
-              <a href={`tel:${business.phone.replace(/\s/g, "")}`}>
-                {business.phone}
-              </a>
-            </p>
-            <p className="mt-1 text-[0.9rem]">
-              <a
-                href={`mailto:${business.email}`}
-                className="text-citron underline underline-offset-4"
-              >
-                {business.email}
-              </a>
+              WeChat: {business.wechatId}
             </p>
           </div>
 
@@ -82,9 +72,8 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-paper/15 pt-6 text-[0.8rem] text-paper/65">
           <p>
-            © {new Date().getFullYear()} {business.legalName}
+            © {new Date().getFullYear()} {business.name}
           </p>
-          <p className="tabular">Licence {business.licence}</p>
         </div>
       </div>
     </footer>

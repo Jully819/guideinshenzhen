@@ -61,14 +61,8 @@ export default function InquiryPage() {
             We use what you send here to answer your inquiry and nothing else.
             Cancellation and payment terms — {policy.cancellationHours} hours
             for a free cancellation — apply once a day is confirmed and paid
-            for, not to an inquiry. Questions before then:{" "}
-            <a
-              href={`mailto:${business.email}`}
-              className="text-moss underline underline-offset-4"
-            >
-              {business.email}
-            </a>
-            .
+            for, not to an inquiry. Questions before then: WeChat{" "}
+            <span className="tabular text-ink">{business.wechatId}</span>.
           </p>
         </div>
       </section>

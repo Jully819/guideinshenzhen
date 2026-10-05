@@ -489,26 +489,9 @@ export function InquiryForm() {
           <p role="alert" className="text-[0.9rem] text-alert">
             {status.message}
           </p>
-          <ul className="mt-3 space-y-1 text-[0.9rem]">
-            <li>
-              <a
-                href={`mailto:${business.email}`}
-                className="text-moss underline underline-offset-4"
-              >
-                {business.email}
-              </a>
-            </li>
-            <li>
-              <a
-                href={`https://wa.me/${business.whatsapp.replace(/[^\d]/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-moss underline underline-offset-4"
-              >
-                WhatsApp
-              </a>
-            </li>
-          </ul>
+          <p className="tabular mt-3 text-[0.9rem]">
+            WeChat: {business.wechatId}
+          </p>
         </div>
       )}
 
@@ -744,7 +727,7 @@ function Sent({ answers }: { answers: Answers }) {
         you say yes.
       </p>
       <p className="mt-6 text-[0.9rem] text-ink/60">
-        If it is urgent, {business.whatsapp} on WhatsApp is faster.
+        If it is urgent, message {business.wechatId} on WeChat.
       </p>
     </div>
   );

@@ -410,14 +410,8 @@ export function BookingFlow({
           </div>
 
           <p className="mt-4 text-[0.85rem] text-ink/60">
-            Rather talk first? Call{" "}
-            <a
-              href={`tel:${business.phone.replace(/\s/g, "")}`}
-              className="tabular text-moss underline underline-offset-2"
-            >
-              {business.phone}
-            </a>
-            .
+            Rather talk first? Message us on WeChat at{" "}
+            <span className="tabular text-ink">{business.wechatId}</span>.
           </p>
         </section>
       )}

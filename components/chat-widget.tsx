@@ -277,37 +277,12 @@ export function ChatWidget() {
 
 /** Always shown, under whatever state the form is in. */
 function Channels() {
-  const whatsapp = business.whatsapp.replace(/[^\d]/g, "");
-
   return (
     <div className="border-t border-ink/10 px-5 py-4">
       <p className="eyebrow mb-3 text-slate">Or reach us directly</p>
       <ul className="space-y-2 text-[0.88rem]">
-        <li>
-          <a
-            href={`https://wa.me/${whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-moss underline underline-offset-4 hover:text-ink"
-          >
-            WhatsApp
-          </a>
-        </li>
-        <li>
-          <a
-            href={`mailto:${business.email}`}
-            className="text-moss underline underline-offset-4 hover:text-ink"
-          >
-            {business.email}
-          </a>
-        </li>
-        <li>
-          <a
-            href={`tel:${business.phone.replace(/\s/g, "")}`}
-            className="tabular text-ink/70 hover:text-ink"
-          >
-            {business.phone}
-          </a>
+        <li className="tabular text-ink/70">
+          WeChat: {business.wechatId}
         </li>
       </ul>
     </div>

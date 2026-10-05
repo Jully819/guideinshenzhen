@@ -40,14 +40,9 @@ export default function ManagePage() {
         </p>
 
         <p className="mt-3 text-[0.92rem] leading-relaxed text-ink/60">
-          Lost the reference? Call{" "}
-          <a
-            href={`tel:${business.phone.replace(/\s/g, "")}`}
-            className="tabular text-moss underline underline-offset-2"
-          >
-            {business.phone}
-          </a>{" "}
-          and we will find it for you.
+          Lost the reference? Message us on WeChat at{" "}
+          <span className="tabular text-ink">{business.wechatId}</span> and we
+          will find it for you.
         </p>
       </div>
 

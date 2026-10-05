@@ -172,12 +172,9 @@ export function SiteHeader() {
             <span aria-hidden="true">→</span>
           </Link>
 
-          <a
-            href={`tel:${business.phone.replace(/\s/g, "")}`}
-            className="tabular mt-3 block border-t border-ink/10 pt-4 text-[0.9rem] text-slate"
-          >
-            {business.phone}
-          </a>
+          <p className="tabular mt-3 border-t border-ink/10 pt-4 text-[0.9rem] text-slate">
+            WeChat: {business.wechatId}
+          </p>
         </nav>
       )}
     </header>

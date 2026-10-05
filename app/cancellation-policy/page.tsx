@@ -91,24 +91,6 @@ export default function CancellationPolicyPage() {
                 request in writing.
               </p>
               <ul className="mt-5 space-y-2 text-[0.95rem]">
-                <li>
-                  <a
-                    href={`mailto:${business.email}`}
-                    className="text-moss underline underline-offset-4 hover:text-ink"
-                  >
-                    {business.email}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`https://wa.me/${business.whatsapp.replace(/[^\d]/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-moss underline underline-offset-4 hover:text-ink"
-                  >
-                    WhatsApp
-                  </a>
-                </li>
                 <li className="text-ink/70">
                   WeChat:{" "}
                   <span className="tabular">{business.wechatId}</span>
