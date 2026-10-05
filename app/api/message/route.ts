@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
 import { business } from "@/lib/content";
+import { postWebhook } from "@/lib/webhook";
 
 /**
  * Messages from the chat widget (components/chat-widget.tsx).
@@ -130,10 +131,9 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await fetch(webhook, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
+    const result = await postWebhook(
+      webhook,
+      {
         // `text` first and pre-formatted: Slack and Discord both render this
         // field directly, so the message is readable without any mapping step
         // in between. The structured fields below are for everything else.
@@ -146,15 +146,17 @@ export async function POST(request: Request) {
         message,
         page,
         receivedAt: new Date().toISOString(),
-      }),
-      // Without this a hung webhook holds the request open until the platform
-      // kills it, and the visitor watches a spinner for the whole timeout.
-      signal: AbortSignal.timeout(8000),
-    });
+        // FormSubmit fields: the email's subject line, and Reply-To set to the
+        // visitor so answering is one click. Other webhooks ignore them.
+        _subject: `New message from ${name} via ${business.name}`,
+        _replyto: email,
+      },
+      request,
+    );
 
-    if (!response.ok) {
+    if (!result.ok) {
       console.error(
-        `[message] webhook rejected the message: ${response.status}`,
+        `[message] webhook rejected the message: ${result.status} ${result.detail ?? ""}`,
       );
       return NextResponse.json(
         { error: "The message could not be delivered.", code: "undelivered" },

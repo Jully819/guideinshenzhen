@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
 import { business } from "@/lib/content";
+import { postWebhook } from "@/lib/webhook";
 
 /**
  * Trip inquiries from /inquiry.
@@ -117,15 +118,21 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await fetch(webhook, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text: asText(inquiry), ...inquiry }),
-      signal: AbortSignal.timeout(8000),
-    });
+    const result = await postWebhook(
+      webhook,
+      {
+        text: asText(inquiry),
+        ...inquiry,
+        _subject: `New trip inquiry from ${inquiry.name}`,
+        _replyto: inquiry.email,
+      },
+      request,
+    );
 
-    if (!response.ok) {
-      console.error(`[inquiry] webhook rejected: ${response.status}`);
+    if (!result.ok) {
+      console.error(
+        `[inquiry] webhook rejected: ${result.status} ${result.detail ?? ""}`,
+      );
       return NextResponse.json(
         { error: "The inquiry could not be delivered.", code: "undelivered" },
         { status: 502 },
