@@ -101,7 +101,7 @@ export const business = {
    * answers 403 to requests from Vercel's servers, so this cannot go through
    * /api/message. Activated for guideinshenzhen.vercel.app and localhost.
    */
-  messageEndpoint: "https://formsubmit.co/ajax/msl.wang@gmail.com",
+  messageEndpoint: "https://formsubmit.co/ajax/f1ba9e775185156e5d67ffe3d4c9861f",
   licence: "LICENCE-NUMBER-PENDING", // PLACEHOLDER — do not ship
   city: "Shenzhen",
   timeZone: "Asia/Shanghai",

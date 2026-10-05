@@ -14,6 +14,10 @@ export function SiteFooter() {
             <p className="tabular mt-5 text-[0.9rem]">
               WeChat: {business.wechatId}
             </p>
+            <p className="tabular mt-1 text-[0.85rem] text-paper/60">
+              Replies {business.hours.open}–{business.hours.close}{" "}
+              {business.city} time
+            </p>
           </div>
 
           <div>
