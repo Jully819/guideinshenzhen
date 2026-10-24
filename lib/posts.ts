@@ -11,27 +11,23 @@ import { shenzhenInternationalMuseumOfArt } from "@/lib/posts/shenzhen-internati
 /**
  * BLOG POSTS.
  *
- * ⚠️ THE THREE PLACEHOLDERS BELOW ARE STILL PLACEHOLDERS AND SAY SO IN THEIR
- * OWN TEXT. The first entry in the array is a real, published post and is the
- * one exception to everything the next paragraph says. They exist
- * to prove the index, the dates, the slugs and the article layout render — not
- * to be published. Nothing here may be quietly promoted to real by deleting the
- * word PLACEHOLDER: these are claims about Shenzhen that a visitor will plan a
- * trip around, and this codebase has no way to check a single one of them. The
- * same rule `shenzhenDevelopments` and `testimonials` follow in lib/content.ts.
+ * Every entry is a real post in its own file under lib/posts/. The three
+ * PLACEHOLDER scaffolding entries that used to sit at the end of the array were
+ * removed on 24 October 2026, along with the banner on the index that labelled
+ * them. Do not add scaffolding posts back. These are claims about Shenzhen that
+ * a visitor will plan a trip around, and this codebase has no way to check a
+ * single one of them.
  *
- * WRITING A REAL POST: replace one of these entries whole — `title`, `excerpt`,
- * `body`, and a `published` date in ISO form — or add a new entry and delete a
- * placeholder. `slug` is the URL and should not change once a post is live;
- * changing it breaks every link anybody has shared.
+ * WRITING A REAL POST: add a file under lib/posts/ and register it below.
+ * `slug` is the URL and should not change once a post is live. Changing it
+ * breaks every link anybody has shared.
  *
  * WHEN THIS ARRAY IS EMPTY the index says so rather than rendering a bare
  * heading over nothing. An empty blog is honest. A blog of invented articles
  * about visa rules and metro lines is how somebody misses a border crossing.
  *
- * `body` is an array of paragraphs, deliberately not Markdown or MDX: three
- * placeholder posts do not justify a parser, and adding one later is a smaller
- * job than unpicking one that was added too early.
+ * `body` is an array of paragraphs for posts with no section structure. The
+ * long-form posts use `intro`, `sections` and `faqs` instead.
  */
 /**
  * A photograph and the credit that has to travel with it.
@@ -167,47 +163,8 @@ export const posts: Post[] = [
   howToPayInChinaAsAForeigner,
   whyHongKongPeopleSpendMoneyInShenzhen,
   whyShenzhenIsChinasTechCapital,
-  /* The long-form post lives in its own file. A 250-line object inline here
-     buried the three placeholders and the helpers underneath it. */
   shenzhenBeforeAndAfter,
   topFiveHighTechShenzhen,
-  {
-    slug: "placeholder-getting-around",
-    title: "PLACEHOLDER — getting around Shenzhen without a Chinese phone",
-    published: "2026-07-28",
-    excerpt:
-      "PLACEHOLDER — a post about metro cards, ride-hailing and what actually works for a visitor whose apps do not. Replace with something the guides have tested this month.",
-    author: "Guide in Shenzhen",
-    body: [
-      "PLACEHOLDER. This paragraph exists to set the measure of the article column and nothing else. Replace the whole post before publishing — every sentence here is furniture.",
-      "A real version of this post would say which payment method the guides actually watched a visitor use last month, at which counter, and what happened when it failed. That is the post nobody else writes, and it is the only kind worth writing.",
-      "Delete this entry, or overwrite it. Do not edit around it.",
-    ],
-  },
-  {
-    slug: "placeholder-fair-week",
-    title: "PLACEHOLDER — what a fair week in Shenzhen actually costs you",
-    published: "2026-06-12",
-    excerpt:
-      "PLACEHOLDER — hotels, taxis and the hours lost between halls during CHTF or CIOE. Replace with figures the business has seen, not figures from a listing site.",
-    author: "Guide in Shenzhen",
-    body: [
-      "PLACEHOLDER. See the note at the top of lib/posts.ts before touching this file.",
-      "The honest version of this article is mostly arithmetic: how far the venue is from the hotels that still have rooms, how long the queue for a taxi runs at closing, and what a day is worth to somebody who flew in for three of them.",
-    ],
-  },
-  {
-    slug: "placeholder-factory-visit",
-    title: "PLACEHOLDER — questions to ask on a first factory visit",
-    published: "2026-05-04",
-    excerpt:
-      "PLACEHOLDER — what to look at on the floor, and which answers to write down. Replace with what the guides ask when they are in the room.",
-    author: "Guide in Shenzhen",
-    body: [
-      "PLACEHOLDER. Every claim in a real version of this post is checkable, which is exactly why it cannot be invented here.",
-      "It would be a list of questions, in the order they are worth asking, with the reason each one matters — written by somebody who has stood on the floor and heard the answers change when they were asked in Mandarin.",
-    ],
-  },
 ];
 
 /** Newest first. The index and the article pages both read this, not `posts`. */

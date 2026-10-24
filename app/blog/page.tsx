@@ -12,20 +12,12 @@ export const metadata: Metadata = {
 /**
  * /blog — the index.
  *
- * ⚠️ EVERY POST IS A PLACEHOLDER AND LABELS ITSELF ON THE PAGE. See the header
- * of lib/posts.ts. The banner below is not decoration: an article page carries
- * more authority than a marketing page, and a visitor who finds three
- * confident-looking posts about visas and metro lines will plan around them.
- *
- * The empty state is real and worth keeping. Deleting the placeholders leaves
- * a page that says nothing is published yet, which is honest and reads fine —
- * unlike a heading floating over a blank column.
+ * The empty state is real and worth keeping. An empty array leaves a page that
+ * says nothing is published yet, which is honest and reads fine — unlike a
+ * heading floating over a blank column.
  */
 export default function BlogPage() {
   const posts = getPosts();
-  const anyPlaceholders = posts.some((post) =>
-    post.title.startsWith("PLACEHOLDER"),
-  );
 
   return (
     <div className="mx-auto max-w-[52rem] px-5 py-16 sm:px-8 sm:py-24">
@@ -40,14 +32,6 @@ export default function BlogPage() {
           time you came.
         </p>
       </header>
-
-      {anyPlaceholders && (
-        <p className="mt-8 border-l-2 border-moss bg-paper-card px-5 py-4 text-[0.88rem] leading-relaxed">
-          PLACEHOLDER — nothing below is published writing. Every post is
-          scaffolding for the layout and must be replaced with real articles
-          before launch. See lib/posts.ts.
-        </p>
-      )}
 
       {posts.length === 0 ? (
         <p className="mt-14 border-t border-ink/15 pt-10 text-[0.95rem] text-ink/65">
